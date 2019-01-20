@@ -1,0 +1,3 @@
+#!/bin/bash
+# https://stackoverflow.com/questions/9766014/connect-to-mysql-on-amazon-ec2-from-a-remote-server
+# http://jslim.net/blog/2016/06/06/aws-ec2-enable-remote-access-on-mysql/

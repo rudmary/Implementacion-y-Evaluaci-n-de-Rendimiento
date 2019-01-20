@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+
+install() {
+  if [ -x "$(command -v $1)" ]; then
+    echo -e "\e[4mYa tiene instalado $1\e[0m"
+  else
+    echo -e "\e[4mInstalando $1\e[0m"
+    apt-get install $1 -y
+  fi
+}
+
+install_mysql() {
+  if [ -x "$(command -v $1)" ]; then
+    echo -e "\e[4mYa tiene instalado $1\e[0m"
+  else
+    echo -e "\e[4mInstalando $1\e[0m"
+    debconf-set-selections <<< 'mysql-server mysql-server/root_password password mysqldb'
+  	debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password mysqldb'
+  	apt-get update
+  	apt-get install -y mysql-server
+  fi
+}
+
+apt-get update
+apt-get upgrade
+
+install make
+install git
+install gcc
+install curl
+
+# install wget
+install unzip
+install nginx
+# install protobuf-compiler
+install python3-pip
+install autoconf
+install automake
+install libtool
+install g++
+
+# install mysql-server
+install_mysql mysql-server
+service mysql start
+
+

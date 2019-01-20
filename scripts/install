@@ -1,0 +1,62 @@
+#!/bin/bash
+
+
+# redis
+wget http://download.redis.io/releases/redis-4.0.6.tar.gz
+tar -zxvf redis-4.0.6.tar.gz
+rm redis-4.0.6.tar.gz
+mv redis-4.0.6 .redis
+cd .redis
+make
+src/redis-server --daemonize yes
+cd ..
+
+
+# grpc
+git clone https://github.com/google/protobuf.git .protobuf
+cd  .protobuf
+./autogen.sh
+./configure
+make
+make install
+make ldconfig
+cd ..
+
+#install go
+wget https://dl.google.com/go/go1.11.4.linux-amd64.tar.gz 
+tar -zxvf go1.11.4.linux-amd64.tar.gz
+rm go1.11.4.linux-amd64.tar.gz
+mv go1.11.4.linux-amd64 .go
+
+#install database
+
+
+# 1. install go and add env variables
+
+# wget https://dl.google.com/go/go1.11.4.linux-amd64.tar.gz
+
+2. Instgall mysql driver
+
+go get -u github.com/go-sql-driver/mysql
+
+3. INstall go get variables
+go get github.com/joho/godotenv/cmd/godotenv
+
+3. Install redis driver
+
+go get -u github.com/go-redis/redis
+
+
+4. grpc
+go get -u google.golang.org/grpc
+
+
+5. grpc client
+
+go get -u github.com/golang/protobuf/protoc-gen-go
+
+
+http://google.github.io/proto-lens/installing-protoc.html
+
+
+go get "google.golang.org/grpc/reflection"

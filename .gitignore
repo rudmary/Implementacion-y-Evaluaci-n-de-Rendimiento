@@ -1,0 +1,7 @@
+TODO
+# microservice/.env
+.redis
+.protobuf
+front/front
+microservice/microservice
+scripts/go

@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package microservice;
+
+service Micro {
+  // rpc GetEventos (RequestFecha) returns (Evento) {}
+  rpc Ping (PingRequest) returns (PingReply) {}
+  // rpc Top10Gifs (RequestFecha) returns (stream Gif) {}
+}
+
+// message RequestFecha {
+// }
+
+// message RequestGif {
+// 	string fecha = 1;
+// 	string nombre = 2;
+// }
+
+// message Evento {
+//   string nombre = 1;
+//   string fechaCreacion = 2;
+//   string tipoLocalidad = 3;
+// }
+
+message PingRequest {
+  string message = 1;
+}
+
+message PingReply {
+  string message = 1;
+}
