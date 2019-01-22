@@ -5,3 +5,7 @@ TODO
 front/front
 microservice/microservice
 scripts/go
+microservice/client/client1
+microservice/client/client
+microservice/server/server
+microservice/server/server1

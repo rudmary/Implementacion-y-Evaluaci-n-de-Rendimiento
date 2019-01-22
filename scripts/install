@@ -60,3 +60,9 @@ http://google.github.io/proto-lens/installing-protoc.html
 
 
 go get "google.golang.org/grpc/reflection"
+
+
+go get -u github.com/gin-gonic/gin
+
+
+sudo apt-get install nginx

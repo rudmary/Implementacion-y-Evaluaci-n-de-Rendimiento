@@ -5,13 +5,13 @@ package microservice;
 service Micro {
   // rpc GetEventos (RequestFecha) returns (Evento) {}
   rpc Ping (PingRequest) returns (PingReply) {}
-  // rpc Top10Gifs (RequestFecha) returns (stream Gif) {}
+  // rpc aaaaaa (RequestFecha) returns (stream aaaa) {}
 }
 
 // message RequestFecha {
 // }
 
-// message RequestGif {
+// message Requestaaaa {
 // 	string fecha = 1;
 // 	string nombre = 2;
 // }
