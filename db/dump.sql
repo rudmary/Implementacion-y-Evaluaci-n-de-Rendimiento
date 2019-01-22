@@ -1,6 +1,6 @@
 
 -- localidades
-INSERT INTO localidades (tipo) VALUES ("teatro"), ("estadio"), ("plaza");
+INSERT INTO localidades (tipo, descripcion) VALUES ("teatro", "ESPOL"), ("estadio", "ESPOL"), ("plaza", "ESPOL");
 
 
 -- usuarios
@@ -18,9 +18,9 @@ INSERT INTO eventos (localidad_id, nombre, fechaCreacion) VALUES (1, "Concierto 
 (1, "Concierto 1", "2019-02-20 01:45:26"),
 (1, "Concierto 2", "2019-03-20 01:45:26"),
 (1, "Concierto 3", "2019-04-20 01:45:26"),
-(1, "Concierto 4", "2019-05-20 01:45:26"),
-(1, "Concierto 5", "2019-06-20 01:45:26"),
-(1, "Concierto 6", "2019-07-20 01:45:26");
+(2, "Concierto 4", "2019-05-20 01:45:26"),
+(2, "Concierto 5", "2019-06-20 01:45:26"),
+(2, "Concierto 6", "2019-07-20 01:45:26");
 
 
 -- asientos

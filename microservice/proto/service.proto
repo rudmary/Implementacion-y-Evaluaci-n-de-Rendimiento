@@ -3,29 +3,47 @@ syntax = "proto3";
 package microservice;
 
 service Micro {
-  // rpc GetEventos (RequestFecha) returns (Evento) {}
-  rpc Ping (PingRequest) returns (PingReply) {}
-  // rpc aaaaaa (RequestFecha) returns (stream aaaa) {}
+  // rpc Ping (PingRequest) returns (PingReply) {}
+  rpc GetEventos (RequestEvento) returns (stream Evento) {}
+  // rpc GetAsientos (RequestAsiento) returns (Asiento) {}
+  // rpc ComprarBoleto (RequestComprarBoleto) returns (ReplyBoleto) {}
 }
 
-// message RequestFecha {
+// message ReplyBoleto {
+//   int64 usuario_id = 1;
 // }
 
-// message Requestaaaa {
-// 	string fecha = 1;
-// 	string nombre = 2;
+// message RequestComprarBoleto {
+//   int64 usuario_id = 1;
+//   int64 asiento_id = 2;
 // }
 
-// message Evento {
-//   string nombre = 1;
-//   string fechaCreacion = 2;
-//   string tipoLocalidad = 3;
+// message RequestAsiento {
+  // int64 localidad_id = 1;
 // }
 
-message PingRequest {
-  string message = 1;
+// message Asiento {
+//   string id = 1;
+//   string categoria = 2;
+//   string descripcion = 3;
+// }
+
+message Evento {
+  int64 id = 1;
+  string nombre = 2;
+  string fechaCreacion = 3;
+  string tipoLocalidad = 4;
+  int64 localidad_id = 5;
+  string descripcion = 6;
 }
 
-message PingReply {
-  string message = 1;
+message RequestEvento {
 }
+
+// message PingRequest {
+//   string message = 1;
+// }
+
+// message PingReply {
+//   string message = 1;
+// }

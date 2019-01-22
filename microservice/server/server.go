@@ -2,7 +2,7 @@ package main
 
 import (
 	"log"
-    // "os"
+    "io"
 	"time"
 	"fmt"
 	"golang.org/x/net/context"
@@ -14,7 +14,7 @@ import (
 )
 
 const (
-	address     = "ec2-18-218-144-18.us-east-2.compute.amazonaws.com:50052"
+	address     = "localhost:50051" // ec2-18-218-144-18.us-east-2.compute.amazonaws.com
 	defaultName = "world"
 )
 
@@ -30,17 +30,36 @@ func GetEventos(c *gin.Context) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second * 60)
 	defer cancel()
 
-    start := time.Now()
-    name := defaultName
-	message, err := client.Ping(ctx,  &pb.PingRequest{Message: name})
-	end := time.Now()
-    fmt.Println(end.Sub(start))
-    log.Println(message)
-    if message == nil {
-        c.JSON(http.StatusInternalServerError, gin.H{"not connected": "no conectado"})
-    } else {
-        c.JSON(http.StatusOK, gin.H{"eventos": "Los eventos"})
+    // start := time.Now()
+    // name := defaultName
+    stream, err := client.GetEventos(ctx, &pb.RequestEvento{})
+    var names [50]gin.H
+    i := 0
+    for {
+		evento, err := stream.Recv()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			log.Fatalf("%v.ListFeatures(_) = _, %v", c, err)
+        }
+        
+        if evento.Nombre != "" {
+            names[i] = gin.H{"nombre": evento.Nombre,"id": evento.Id, "fechaCreacion": evento.FechaCreacion, "tipoLocalidad": evento.TipoLocalidad, "localidad_id": evento.LocalidadId, "descripcion": evento.Descripcion }
+        }
+        // log.Printf("Server: %s", evento.Nombre)
+        i++
     }
+    c.JSON(http.StatusOK, names)
+	// message, err := client.Ping(ctx,  &pb.PingRequest{Message: name})
+	// end := time.Now()
+    // fmt.Println(end.Sub(start))
+    // log.Println(message)
+    // if message == nil {
+    //     c.JSON(http.StatusInternalServerError, gin.H{"not connected": "no conectado"})
+    // } else {
+    //     c.JSON(http.StatusOK, gin.H{"eventos": "Los eventos"})
+    // }
 }
 
 func ComprarBoletos(c *gin.Context)  {
