@@ -9,6 +9,8 @@ It is generated from these files:
 	service.proto
 
 It has these top-level messages:
+	RequestAsiento
+	Asiento
 	Evento
 	RequestEvento
 */
@@ -27,6 +29,24 @@ var _ grpc.ClientConn
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
+
+type RequestAsiento struct {
+	LocalidadId int64 `protobuf:"varint,1,opt,name=localidad_id" json:"localidad_id,omitempty"`
+}
+
+func (m *RequestAsiento) Reset()         { *m = RequestAsiento{} }
+func (m *RequestAsiento) String() string { return proto.CompactTextString(m) }
+func (*RequestAsiento) ProtoMessage()    {}
+
+type Asiento struct {
+	Id          int64  `protobuf:"varint,1,opt,name=id" json:"id,omitempty"`
+	Categoria   string `protobuf:"bytes,2,opt,name=categoria" json:"categoria,omitempty"`
+	Descripcion string `protobuf:"bytes,3,opt,name=descripcion" json:"descripcion,omitempty"`
+}
+
+func (m *Asiento) Reset()         { *m = Asiento{} }
+func (m *Asiento) String() string { return proto.CompactTextString(m) }
+func (*Asiento) ProtoMessage()    {}
 
 type Evento struct {
 	Id            int64  `protobuf:"varint,1,opt,name=id" json:"id,omitempty"`
@@ -56,6 +76,7 @@ func init() {
 type MicroClient interface {
 	// rpc Ping (PingRequest) returns (PingReply) {}
 	GetEventos(ctx context.Context, in *RequestEvento, opts ...grpc.CallOption) (Micro_GetEventosClient, error)
+	GetAsientos(ctx context.Context, in *RequestAsiento, opts ...grpc.CallOption) (Micro_GetAsientosClient, error)
 }
 
 type microClient struct {
@@ -98,11 +119,44 @@ func (x *microGetEventosClient) Recv() (*Evento, error) {
 	return m, nil
 }
 
+func (c *microClient) GetAsientos(ctx context.Context, in *RequestAsiento, opts ...grpc.CallOption) (Micro_GetAsientosClient, error) {
+	stream, err := grpc.NewClientStream(ctx, &_Micro_serviceDesc.Streams[1], c.cc, "/microservice.Micro/GetAsientos", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &microGetAsientosClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type Micro_GetAsientosClient interface {
+	Recv() (*Asiento, error)
+	grpc.ClientStream
+}
+
+type microGetAsientosClient struct {
+	grpc.ClientStream
+}
+
+func (x *microGetAsientosClient) Recv() (*Asiento, error) {
+	m := new(Asiento)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // Server API for Micro service
 
 type MicroServer interface {
 	// rpc Ping (PingRequest) returns (PingReply) {}
 	GetEventos(*RequestEvento, Micro_GetEventosServer) error
+	GetAsientos(*RequestAsiento, Micro_GetAsientosServer) error
 }
 
 func RegisterMicroServer(s *grpc.Server, srv MicroServer) {
@@ -130,6 +184,27 @@ func (x *microGetEventosServer) Send(m *Evento) error {
 	return x.ServerStream.SendMsg(m)
 }
 
+func _Micro_GetAsientos_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(RequestAsiento)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(MicroServer).GetAsientos(m, &microGetAsientosServer{stream})
+}
+
+type Micro_GetAsientosServer interface {
+	Send(*Asiento) error
+	grpc.ServerStream
+}
+
+type microGetAsientosServer struct {
+	grpc.ServerStream
+}
+
+func (x *microGetAsientosServer) Send(m *Asiento) error {
+	return x.ServerStream.SendMsg(m)
+}
+
 var _Micro_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "microservice.Micro",
 	HandlerType: (*MicroServer)(nil),
@@ -138,6 +213,11 @@ var _Micro_serviceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "GetEventos",
 			Handler:       _Micro_GetEventos_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "GetAsientos",
+			Handler:       _Micro_GetAsientos_Handler,
 			ServerStreams: true,
 		},
 	},

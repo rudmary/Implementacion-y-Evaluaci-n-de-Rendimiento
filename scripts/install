@@ -66,3 +66,10 @@ go get -u github.com/gin-gonic/gin
 
 
 sudo apt-get install nginx
+
+
+sudo apt-get install golang-goprotobuf-dev
+
+# go get github.com/gin-contrib/cors
+
+go get github.com/gin-contrib/static

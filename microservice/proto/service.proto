@@ -5,7 +5,7 @@ package microservice;
 service Micro {
   // rpc Ping (PingRequest) returns (PingReply) {}
   rpc GetEventos (RequestEvento) returns (stream Evento) {}
-  // rpc GetAsientos (RequestAsiento) returns (Asiento) {}
+  rpc GetAsientos (RequestAsiento) returns (stream Asiento) {}
   // rpc ComprarBoleto (RequestComprarBoleto) returns (ReplyBoleto) {}
 }
 
@@ -18,15 +18,15 @@ service Micro {
 //   int64 asiento_id = 2;
 // }
 
-// message RequestAsiento {
-  // int64 localidad_id = 1;
-// }
+message RequestAsiento {
+  int64 localidad_id = 1;
+}
 
-// message Asiento {
-//   string id = 1;
-//   string categoria = 2;
-//   string descripcion = 3;
-// }
+message Asiento {
+  int64 id = 1;
+  string categoria = 2;
+  string descripcion = 3;
+}
 
 message Evento {
   int64 id = 1;
