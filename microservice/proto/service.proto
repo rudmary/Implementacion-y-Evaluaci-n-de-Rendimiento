@@ -19,7 +19,7 @@ service Micro {
 // }
 
 message RequestAsiento {
-  int64 localidad_id = 1;
+  string localidad_id = 1;
 }
 
 message Asiento {

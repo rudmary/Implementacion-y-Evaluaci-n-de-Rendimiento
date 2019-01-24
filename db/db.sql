@@ -52,10 +52,12 @@ AUTO_INCREMENT=1 ;
 CREATE TABLE `boletosComprados` (
     id INTEGER UNSIGNED AUTO_INCREMENT NOT NULL UNIQUE,
 	usuarios_id INT(11) UNSIGNED NOT NULL,
+    eventos_id  INT(11) UNSIGNED NOT NULL,
     asientos_id INT(11) UNSIGNED NOT NULL UNIQUE, -- unque, dos usuarios no pueden comprar el mismo boleto
     fechaCreacion TIMESTAMP NOT NULL  DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT FOREIGN KEY (usuarios_id) REFERENCES usuarios(id),
     CONSTRAINT FOREIGN KEY (asientos_id) REFERENCES asientos(id),
+    CONSTRAINT FOREIGN KEY (eventos_id) REFERENCES eventos(id),
     PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
 AUTO_INCREMENT=1 ;

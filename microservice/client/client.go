@@ -178,7 +178,7 @@ func GetEventosFromDB() ([50]pb.Evento, error) {
     return eventos, nil
 }
 
-func GetAsientosFromDB(localidad_id int64) ([400]pb.Asiento, error) {
+func GetAsientosFromDB(localidad_id string) ([400]pb.Asiento, error) {
 	err := godotenv.Load()
 	checkErr(err)
     var asientos [400]pb.Asiento
@@ -190,7 +190,7 @@ func GetAsientosFromDB(localidad_id int64) ([400]pb.Asiento, error) {
 	dbConfig := fmt.Sprintf("%s:%s@tcp(%s:3306)/%s", MYSQL_USER, MYSQL_PASSWORD, MYSQL_HOST, MYSQL_DATABASE)// username:password@protocol(address)/dbname?param=value
 
     db, err := sql.Open("mysql", dbConfig)
-    rows, err := db.Query("select * from asientos inner join localidades_asientos where localidades_asientos.localidad_id = 1") // ,strconv.FormatInt(localidad_id, 10)
+    rows, err := db.Query("select * from asientos inner join localidades_asientos where localidades_asientos.asientos_id = asientos.id and localidades_asientos.localidad_id = " + localidad_id) // ,strconv.FormatInt(localidad_id, 10)
     checkErr(err)
     defer db.Close()
     i := 0

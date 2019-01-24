@@ -66,8 +66,8 @@ func GetAsientos(c *gin.Context) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second * 60)
 	defer cancel()
     // LocalidadId := c.Param("name")
-    // var LocalidadId int64 = 1
-    stream, err := client.GetAsientos(ctx, &pb.RequestAsiento{})
+    LocalidadId := c.Param("localidaId")
+    stream, err := client.GetAsientos(ctx, &pb.RequestAsiento{ LocalidadId:LocalidadId })
     var names [400]gin.H
     i := 0
     for {

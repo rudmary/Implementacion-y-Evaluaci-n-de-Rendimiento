@@ -31,7 +31,7 @@ var _ grpc.ClientConn
 var _ = proto.Marshal
 
 type RequestAsiento struct {
-	LocalidadId int64 `protobuf:"varint,1,opt,name=localidad_id" json:"localidad_id,omitempty"`
+	LocalidadId string `protobuf:"bytes,1,opt,name=localidad_id" json:"localidad_id,omitempty"`
 }
 
 func (m *RequestAsiento) Reset()         { *m = RequestAsiento{} }

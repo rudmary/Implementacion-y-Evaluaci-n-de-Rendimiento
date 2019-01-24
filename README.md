@@ -97,3 +97,9 @@ server {
 }
 
 ```
+
+- Correr los archivos
+
+```sh
+nohup ./server &
+```
